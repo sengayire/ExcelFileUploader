@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "target": "ES6",
+    "module": "ES6",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "outDir": "./build",
+    "typeRoots": ["node_modules/@types", "src/types"],
+    "paths": {
+      "types/*": ["src/types/*"],
+      "helpers/*": ["src/helpers/*"],
+      "testUtils/*": ["src/testUtils/*"],
+      "utils/*": ["src/utils/*"],
+      "constants/*": ["src/constants/*"],
+      "models/*": ["src/database/models/*"],
+      "resources/*": ["src/resources/*"],
+      "controllers/*": ["src/controllers/*"],
+      "routes": ["src/routes"],
+      "routes/*": ["src/routes/*"],
+      "middlewares/*": ["src/middlewares/*"],
+      "polyglot": ["src/polyglot"],
+      "polyglot/*": ["src/polyglot/*"],
+      "emails/*": ["src/emails/*"],
+      "tests/*": ["src/tests/*"],
+      "swagger": ["src/swagger"],
+      "swagger/*": ["src/swagger/*"],
+      "events/*": ["src/events/*"]
+    }
+  },
+  "include": ["./src/**/*", "tests"],
+  "exclude": ["node_modules", "coverage", "docs"]
+}
