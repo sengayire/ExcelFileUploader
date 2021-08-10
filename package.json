@@ -2,8 +2,8 @@
   "name": "Excel-file-uploader",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "git@github.com:Ossix-Technologies/farmers-corner-backend.git",
-  "author": "SENGAYIRE <psengayire@gmil.com>",
+  "repository": "git@github.com:sengayire/ExcelFileUploader.git",
+  "author": "sengayire <psengayire@gmil.com>",
   "license": "MIT",
   "private": true,
   "scripts": {
