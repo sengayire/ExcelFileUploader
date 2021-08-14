@@ -6,6 +6,7 @@ import requestWrapper from 'helpers/requestWrapper';
 import getUsersFromStream from 'helpers/getUsersFromStream';
 import Users from 'models/users';
 import { HTTP_CREATED, HTTP_OK } from 'constants/httpStatusCodes';
+import pagination from 'helpers/pagination';
 
 /**
  * @param  {object} req
@@ -15,7 +16,10 @@ import { HTTP_CREATED, HTTP_OK } from 'constants/httpStatusCodes';
 
 export const users = requestWrapper(
   async (req: Request, res: Response): Promise<Response> => {
-    const { body } = req;
+    const {
+      body,
+      query: { page, perPage },
+    } = req;
 
     const buffer = await getUsersFromStream(body);
 
@@ -30,7 +34,12 @@ export const users = requestWrapper(
       message: `users list`,
       status: HTTP_OK,
       res,
-      data,
+      data: pagination(data, page, perPage),
+      meta: {
+        page: Number(page) || 1,
+        perPage: Number(perPage),
+        total: data.length,
+      },
     });
   },
 );
