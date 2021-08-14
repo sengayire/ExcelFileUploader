@@ -6,7 +6,7 @@ const S3 = new aws.S3();
 
 const storage = multerS3({
   s3: S3,
-  bucket: process.env.AWS_BUCKET_NAME,
+  bucket: `${process.env.AWS_BUCKET_NAME}`,
   metadata(req, file, cb) {
     cb(null, { fieldName: file.fieldname });
   },
