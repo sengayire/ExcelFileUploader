@@ -1,23 +1,24 @@
 import path from 'path';
 import multer from 'multer';
+import aws from 'aws-sdk';
+import multerS3 from 'multer-s3';
 
 const dirname = path.resolve();
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, `${dirname}/src/uploads/`);
+const S3 = new aws.S3();
+aws.config.update({
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  region: 'eu-west-3',
+});
+const storage = multerS3({
+  s3: S3,
+  bucket: 'prince-files',
+  metadata(req, file, cb) {
+    cb(null, { fieldName: file.fieldname });
   },
-
-  filename: (req, file, cb) => {
-    cb(null, `${file.fieldname}-${Date.now()}-${file.originalname}`);
+  key(req, file, cb) {
+    cb(null, Date.now().toString());
   },
 });
-
-const fileFilter = (req, file, cb, onError) => {
-  if (file.mimetype.includes('jpeg') || file.mimetype.includes('png') || file.mimetype.includes('jpg')) {
-    return cb(new Error('Only pdf are allowed'));
-  }
-  cb(null, true);
-};
-
-export const multerUpload = multer({ storage, fileFilter });
+export const multerUpload = multer({ storage });
