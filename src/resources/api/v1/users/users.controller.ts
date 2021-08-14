@@ -4,6 +4,8 @@ import xlsx from 'xlsx';
 import jsonResponse from 'helpers/jsonResponse';
 import requestWrapper from 'helpers/requestWrapper';
 import getUsersFromStream from 'helpers/getUsersFromStream';
+import Users from 'models/users';
+import { HTTP_CREATED, HTTP_OK } from 'constants/httpStatusCodes';
 
 /**
  * @param  {object} req
@@ -26,9 +28,25 @@ export const users = requestWrapper(
 
     return jsonResponse({
       message: `users list`,
-      status: 200,
+      status: HTTP_OK,
       res,
       data,
+    });
+  },
+);
+
+export const saveUsers = requestWrapper(
+  async (req: Request, res: Response): Promise<Response> => {
+    const {
+      body: { data },
+    } = req;
+
+    await Users.bulkCreate(data);
+
+    return jsonResponse({
+      message: `Users saved successfully`,
+      status: HTTP_CREATED,
+      res,
     });
   },
 );

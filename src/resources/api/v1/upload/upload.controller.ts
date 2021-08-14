@@ -1,3 +1,4 @@
+import { HTTP_OK } from 'constants/httpStatusCodes';
 import { Request, Response } from 'express';
 
 import jsonResponse from 'helpers/jsonResponse';
@@ -23,7 +24,7 @@ export const uploadFile = requestWrapper(
     };
 
     return jsonResponse({
-      status: 200,
+      status: HTTP_OK,
       res,
       message: `File (${originalname}) uploaded successfully`,
       data,
