@@ -1,3 +1,5 @@
+import AWS from 'aws-sdk';
+
 const getBuffer = (file, callback) => {
   const buffers = [];
 

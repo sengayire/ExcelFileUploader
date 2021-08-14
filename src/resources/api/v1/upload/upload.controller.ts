@@ -1,6 +1,6 @@
-import { HTTP_OK } from 'constants/httpStatusCodes';
 import { Request, Response } from 'express';
 
+import { HTTP_OK } from 'constants/httpStatusCodes';
 import jsonResponse from 'helpers/jsonResponse';
 import requestWrapper from 'helpers/requestWrapper';
 

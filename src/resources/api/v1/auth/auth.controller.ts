@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 import jsonResponse from 'helpers/jsonResponse';
 import requestWrapper from 'helpers/requestWrapper';
 import Login from 'models/login';
-import { HTTP_BAD_REQUEST, HTTP_CREATED, HTTP_EXIST, HTTP_NOT_FOUND } from 'constants/httpStatusCodes';
+import { HTTP_BAD_REQUEST, HTTP_CREATED, HTTP_EXIST, HTTP_NOT_FOUND, HTTP_OK } from 'constants/httpStatusCodes';
 import generateToken from 'helpers/generateToken';
 
 /**
@@ -42,7 +42,7 @@ export const login = requestWrapper(
     const token = generateToken(username);
 
     return jsonResponse({
-      status: 200,
+      status: HTTP_OK,
       res,
       message: 'Logged in successfully',
       token,
@@ -55,7 +55,9 @@ export const registerUser = requestWrapper(
     const { body } = req;
 
     const hashedPassword = await bcrypt.hash(body.password, 10);
+
     const data = { ...body, password: hashedPassword };
+
     const userExists = await Login.findOne({ where: { username: body.username } });
     if (userExists) {
       return jsonResponse({
@@ -65,6 +67,7 @@ export const registerUser = requestWrapper(
       });
     }
     const response = await Login.create(data);
+
     const token = generateToken(body.username);
 
     delete response.dataValues.password;
