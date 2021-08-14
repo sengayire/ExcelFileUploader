@@ -137,7 +137,7 @@ after the project has been installed in your local environment open the postman 
 }
 ```
 
-> Save users list: `/api/v1/users` _GET_
+> Save users list: `/api/v1/users` _POST_
 
 - Response payload
 
