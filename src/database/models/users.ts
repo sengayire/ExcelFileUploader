@@ -26,7 +26,8 @@ import { sequelize } from './index';
     NID: DataTypes.STRING,
     email: DataTypes.STRING,
     phoneNumber: DataTypes.STRING,
-    gender: DataTypes.STRING
+    gender: DataTypes.STRING,
+    errors: DataTypes.JSON,
   }, {
     sequelize,
     modelName: 'Users',
