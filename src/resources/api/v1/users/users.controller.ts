@@ -7,6 +7,7 @@ import getUsersFromStream from 'helpers/getUsersFromStream';
 import Users from 'models/users';
 import { HTTP_CREATED, HTTP_OK } from 'constants/httpStatusCodes';
 import pagination from 'helpers/pagination';
+import validationSchema from 'helpers/validationSchema';
 
 /**
  * @param  {object} req
@@ -30,15 +31,20 @@ export const users = requestWrapper(
 
     const data = xlsx.utils.sheet_to_json(workbook.Sheets[sheetNames[sheetIndex - 1]]);
 
+    const validatedData = data.map((user) => {
+      const validation = validationSchema.validate(user);
+      return { ...(user as { [key: string]: string }), errors: validation.error?.details };
+    });
+
     return jsonResponse({
       message: `users list`,
       status: HTTP_OK,
       res,
-      data: pagination(data, page, perPage),
+      data: pagination(validatedData, page, perPage),
       meta: {
         page: Number(page) || 1,
         perPage: Number(perPage),
-        total: data.length,
+        total: validatedData.length,
       },
     });
   },
