@@ -18,11 +18,10 @@ import validationSchema from 'helpers/validationSchema';
 export const users = requestWrapper(
   async (req: Request, res: Response): Promise<Response> => {
     const {
-      body,
-      query: { page, perPage },
+      query: { page, perPage, filePath, key },
     } = req;
 
-    const buffer = await getUsersFromStream(body);
+    const buffer = await getUsersFromStream({ filePath, key });
 
     const workbook = xlsx.read(buffer);
     const sheetNames = workbook.SheetNames;

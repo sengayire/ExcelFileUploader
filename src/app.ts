@@ -9,11 +9,14 @@ import compression from 'compression';
 import helmet from 'helmet';
 import useragent from 'express-useragent';
 import requestIp from 'request-ip';
+import swaggerUi from 'swagger-ui-express';
 
 import apiRoutes from 'resources/api';
 import { HTTP_NOT_FOUND, HTTP_SERVER_ERROR } from 'constants/httpStatusCodes';
+import swaggerDocument from './swagger/index';
 
 const app: Express = express();
+
 const server: Server = http.createServer(app);
 
 app.use(requestIp.mw());
@@ -25,6 +28,7 @@ app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/api', apiRoutes);
 
 // catch 404 and forward to error handler
